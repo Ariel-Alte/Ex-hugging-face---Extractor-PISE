@@ -2,7 +2,7 @@
 PISE — Extractor de Informes de Inspección de Seguridad Estática
 Versión: 3.1 (Streamlit)
 Plataforma: Streamlit
-Migración de Gradio a Streamlit - Marzo 2026
+Migración de Gradio a Streamlit - 27 Marzo 2026
 
 Flujo:
   1. Extrae encabezado (vehículo, línea, informe N°, fecha, código PISE)
@@ -161,8 +161,7 @@ def extraer_clasificaciones(paginas: list) -> dict:
     texto_conc = ""
     for pag in paginas:
         t = pag["texto"]
-        if (re.search(r"[D]\.\s*CONCLUSIONES?", t, re.IGNORECASE) and
-                re.search(r"normales?\s*\(?no\s+cr[ií]tic", t, re.IGNORECASE)):
+        if re.search(r"[D]\.\s*CONCLUSIONES?", t, re.IGNORECASE):
             texto_conc = _limpiar_texto_conc(t)
             break
 
