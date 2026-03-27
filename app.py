@@ -170,7 +170,7 @@ def extraer_clasificaciones(paginas: list) -> dict:
         return clasificaciones
 
     ENCABEZADOS = [
-        ("REPARADA",  r"observaciones?\s+reparad[ao]s?\s+durante\s+la\s+inspecci[oó]n\s*:"),
+        ("REPARADA",  r"reparad[ao]s?\s*durante\s+la\s+inspecci[oó]n\s*:"),
         ("NORMAL",    r"normales?\s*\(?no\s+cr[ií]tic[ao]s?\)?\s*:"),
         ("CRITICA",   r"cr[ií]tic[ao]s?\s*:"),
         ("RECHAZADA", r"rechazad[ao]s?\s*:"),
