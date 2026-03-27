@@ -2,7 +2,7 @@
 PISE — Extractor de Informes de Inspección de Seguridad Estática
 Versión: 3.1 (Streamlit)
 Plataforma: Streamlit
-Migración de Gradio a Streamlit - 27 Marzo 2026
+Migración de Gradio a Streamlit - Marzo 2026
 
 Flujo:
   1. Extrae encabezado (vehículo, línea, informe N°, fecha, código PISE)
@@ -91,7 +91,8 @@ def extraer_encabezado(paginas: list) -> dict:
         "informe_nro": "", "inspeccion_nro": "", "fecha_inspeccion": "",
         "pise_codigo": "", "codigo_pise_informe": "", "_filename": "",
     }
-    texto = "\n".join(p["texto"] for p in paginas[:4])
+    # Buscar en más páginas porque algunos PDFs tienen info distribuida
+    texto = "\n".join(p["texto"] for p in paginas[:8])
 
     m = re.search(r"(PISE-[A-Z]+-\d{3})", texto, re.IGNORECASE)
     if m:
@@ -161,7 +162,10 @@ def extraer_clasificaciones(paginas: list) -> dict:
     texto_conc = ""
     for pag in paginas:
         t = pag["texto"]
-        if re.search(r"[D]\.\s*CONCLUSIONES?", t, re.IGNORECASE):
+        # Buscar D. CONCLUSIONES que tenga CONTENIDO real (categorías)
+        # No el índice de contenido que solo menciona "D. CONCLUSIONES. 11"
+        if (re.search(r"[D]\.\s*CONCLUSIONES?", t, re.IGNORECASE) and
+                re.search(r"(reparad[ao]s?|normales?|cr[ií]tic[ao]s?|rechazad[ao]s?)", t, re.IGNORECASE)):
             texto_conc = _limpiar_texto_conc(t)
             break
 
