@@ -93,7 +93,7 @@ def extraer_encabezado(paginas: list) -> dict:
     }
     texto = "\n".join(p["texto"] for p in paginas[:4])
 
-    m = re.search(r"(PISE-[A-Z]+-\d+(?::\s*REV\.\d+)?)", texto, re.IGNORECASE)
+    m = re.search(r"(PISE-[A-Z]+-\d{3})", texto, re.IGNORECASE)
     if m:
         enc["pise_codigo"] = m.group(1).strip()
 
@@ -170,7 +170,7 @@ def extraer_clasificaciones(paginas: list) -> dict:
         return clasificaciones
 
     ENCABEZADOS = [
-        ("REPARADA",  r"reparad[ao]s?\s+durante\s+la\s+inspecci[oó]n\s*:"),
+        ("REPARADA",  r"observaciones?\s+reparad[ao]s?\s+durante\s+la\s+inspecci[oó]n\s*:"),
         ("NORMAL",    r"normales?\s*\(?no\s+cr[ií]tic[ao]s?\)?\s*:"),
         ("CRITICA",   r"cr[ií]tic[ao]s?\s*:"),
         ("RECHAZADA", r"rechazad[ao]s?\s*:"),
@@ -994,10 +994,10 @@ def procesar_pdf(pdf_path: str) -> list:
 # ══════════════════════════════════════════════════════════
 
 COLUMNAS = [
-    "Archivo PDF", "Código PISE/Informe", "Vehículo", "Línea", "Lugar",
+    "Archivo PDF", "Código PISE/Informe", "Vehículo", "Línea",
     "Fecha inspección", "Informe N°", "PISE código",
-    "Sección", "Ítem técnico", "Ítem técnico 2", "Descripción",
-    "Bogie", "Rueda", "Lado", "Ubicación",
+    "Ítem técnico", "Ítem técnico 2", "Descripción",
+    "Bogie", "Rueda", "Lado",
     "Valor esperado", "Valor medido",
     "Observación", "Clasificación",
 ]
